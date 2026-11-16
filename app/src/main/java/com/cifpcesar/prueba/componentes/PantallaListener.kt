@@ -50,7 +50,7 @@ fun PantallaListener(
                     headlineContent = { },
                     supportingContent = { },
                     trailingContent = {
-                        Button(onClick = { /*viewModel.borrarPatata(elemento.id)*/ }) {
+                        Button(onClick = {  }) {
                             Text("Borrar")
                         }
                     }

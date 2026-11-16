@@ -1,5 +1,6 @@
 package com.cifpcesar.prueba.repository
 
+import androidx.compose.animation.core.snap
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.tasks.await
@@ -31,7 +32,6 @@ class FirestoreRepository {
 
     // Operaciones de escritura y borrado
     fun anadirElemento(elemento: Any) {
-
     }
 
     fun borrarElemento(id: String) {
@@ -45,8 +45,6 @@ class FirestoreRepository {
         val snapshot = db.collection(RUTA_COLECCION).get().await()
         return snapshot.toObjects(Any::class.java)
     }
-
-
 
     // 2. Filtro con 1 campo
     suspend fun buscarUnCampo(algo : Any): List<Any> {
