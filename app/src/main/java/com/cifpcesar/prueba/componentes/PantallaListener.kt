@@ -22,9 +22,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cifpcesar.prueba.viewmodel.ViewModelPantallaPrincipal
 import kotlin.random.Random
 
-// =======================================================
-// PANTALLA 1: Tiempo Real con addSnapshotListener
-// =======================================================
 @Composable
 fun PantallaListener(
     modifier: Modifier = Modifier,
@@ -34,7 +31,7 @@ fun PantallaListener(
 
     Column(modifier = modifier.fillMaxSize()) {
         Text(
-            text = "Escucha en Tiempo Real (addSnapshotListener)",
+            text = "Lista de elementos",
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(16.dp)
         )
@@ -45,14 +42,15 @@ fun PantallaListener(
                 .weight(1f)
         ) {
             items(
-                items = estado.listaPatatas,
-                key = { it.id }
-            ) { patata ->
+                items = emptyList<String>()/*TODO: Acceder a la lista de elementos*/,
+                //key = { it.id }
+            ) { elemento ->
+                /* TODO: Pintar cada elemento en un ListItem */
                 ListItem(
-                    headlineContent = { Text(patata.marca) },
-                    supportingContent = { Text("Sabor: ${patata.sabor} - ${patata.precio} €") },
+                    headlineContent = { },
+                    supportingContent = { },
                     trailingContent = {
-                        Button(onClick = { viewModel.borrarPatata(patata.id) }) {
+                        Button(onClick = { /*viewModel.borrarPatata(elemento.id)*/ }) {
                             Text("Borrar")
                         }
                     }
@@ -68,15 +66,10 @@ fun PantallaListener(
             horizontalArrangement = Arrangement.Center
         ) {
             Button(onClick = {
-                val marcas = listOf("Lays", "Ruffles", "Pringles", "Doritos")
-                val sabores = listOf("Campesina", "Jamón", "Queso", "Sal")
-                val marcaAzar = marcas.random()
-                val saborAzar = sabores.random()
-                val precioAzar = (Random.nextDouble(1.0, 3.0) * 100).toInt() / 100.0
 
-                viewModel.anadirPatata(marcaAzar, precioAzar, saborAzar)
+                //viewModel.addElemento()
             }) {
-                Text("Añadir Patata Aleatoria")
+                Text("Añadir Elemento")
             }
         }
     }

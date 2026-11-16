@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
@@ -26,9 +25,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cifpcesar.prueba.viewmodel.ViewModelConsultas
 
-// =======================================================
-// PANTALLA 2: Consultas Puntuales con get() (Sin Listener)
-// =======================================================
 @Composable
 fun PantallaConsultas(
     modifier: Modifier = Modifier,
@@ -42,19 +38,9 @@ fun PantallaConsultas(
             .padding(16.dp)
     ) {
         Text(
-            text = "Consultas Puntuales con get()",
+            text = "Consultas únicas",
             style = MaterialTheme.typography.titleMedium
         )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Card que informa del filtro o consulta ejecutada
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Text(
-                text = estado.ultimoFiltroAplicado,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(12.dp)
-            )
-        }
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -74,10 +60,10 @@ fun PantallaConsultas(
                     Text("1. Todas (get)")
                 }
                 Button(
-                    onClick = { viewModel.filtrarPorSabor("Jamón") },
+                    onClick = { /*TODO*/ },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("2. Sabor: Jamón")
+                    Text("2. Filtro por un campo")
                 }
             }
 
@@ -86,22 +72,23 @@ fun PantallaConsultas(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Button(
-                    onClick = { viewModel.filtrarPorSaborYPrecio("Jamón", 2.0) },
+                    onClick = { /*TODO*/ },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("3. Jamón y <= 2€")
+                    Text("3. Filtro por dos campos")
                 }
                 Button(
-                    onClick = { viewModel.obtenerTop3Baratas() },
+                    onClick = { /*TODO*/  },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("4. Top 3 Baratas")
+                    Text("4. Ordenar y sacar top 3")
                 }
             }
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        // esto es necesario, sobretodo si es asíncrono...
         if (estado.cargando) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -112,12 +99,12 @@ fun PantallaConsultas(
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(
-                    items = estado.listaResultados,
-                    key = { it.id }
-                ) { patata ->
+                    items = emptyList<String>(),
+                   // key = { it.id }
+                ) { elemento ->
                     ListItem(
-                        headlineContent = { Text(patata.marca) },
-                        supportingContent = { Text("Sabor: ${patata.sabor} - ${patata.precio} €") }
+                        headlineContent = {  },
+                        supportingContent = {  }
                     )
                     HorizontalDivider()
                 }

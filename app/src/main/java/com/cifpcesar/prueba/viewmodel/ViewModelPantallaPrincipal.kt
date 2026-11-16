@@ -1,13 +1,12 @@
 package com.cifpcesar.prueba.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.cifpcesar.prueba.model.Patata
 import com.cifpcesar.prueba.repository.FirestoreRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 data class PantallaPrincipalUiState(
-    val listaPatatas: List<Patata> = emptyList()
+    val listaPatatas: List<Any> = emptyList()
 )
 
 class ViewModelPantallaPrincipal : ViewModel() {
@@ -17,23 +16,19 @@ class ViewModelPantallaPrincipal : ViewModel() {
     private val _estadoUI = MutableStateFlow(PantallaPrincipalUiState())
     val estadoUI = _estadoUI.asStateFlow()
 
+    // Este init se lanza al inicio... lo que hacemos es escuchar los cambios en la lista
     init {
         repository.escucharDatos { nuevaLista ->
             _estadoUI.value = PantallaPrincipalUiState(listaPatatas = nuevaLista)
         }
     }
 
-    fun anadirPatata(marca: String, precio: Double, sabor: String) {
-        val nuevaPatata = Patata(
-            marca = marca,
-            precio = precio,
-            sabor = sabor
-        )
-        repository.anadirPatata(nuevaPatata)
+    fun addElemento() {
+        // TODO: Llamar al método del repositorio
     }
 
     fun borrarPatata(id: String) {
-        repository.borrarPatata(id)
+        // TODO: Llamar al método del repositorio
     }
 
     // Esto se lanza en el viewmodel cuando

@@ -2,16 +2,14 @@ package com.cifpcesar.prueba.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cifpcesar.prueba.model.Patata
 import com.cifpcesar.prueba.repository.FirestoreRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 data class ConsultasUiState(
-    val listaResultados: List<Patata> = emptyList(),
+    val listaResultados: List<Any> = emptyList(),
     val cargando: Boolean = false,
-    val ultimoFiltroAplicado: String = "Pulsa un botón para ejecutar get()"
 )
 
 class ViewModelConsultas : ViewModel() {
@@ -28,48 +26,36 @@ class ViewModelConsultas : ViewModel() {
             val lista = repository.obtenerTodas()
             _estadoUI.value = ConsultasUiState(
                 listaResultados = lista,
-                cargando = false,
-                ultimoFiltroAplicado = "Consulta get(): Todas las patatas (${lista.size})"
-            )
+                cargando = false)
         }
     }
 
-    // 2. Filtro con 1 campo: whereEqualTo("sabor", sabor)
-    fun filtrarPorSabor(sabor: String = "Jamón") {
+    // 2. Filtro con 1 campo
+    fun filtrarUnCampo(campo: Any = "") {
         viewModelScope.launch {
             _estadoUI.value = _estadoUI.value.copy(cargando = true)
-            val lista = repository.buscarPorSabor(sabor)
+            val lista = repository.buscarUnCampo(campo)
             _estadoUI.value = ConsultasUiState(
                 listaResultados = lista,
-                cargando = false,
-                ultimoFiltroAplicado = "Filtro 1 campo: sabor == '$sabor' (${lista.size})"
-            )
+                cargando = false)
         }
     }
 
-    // 3. Filtro con 2 campos: whereEqualTo + whereLessThanOrEqualTo
-    fun filtrarPorSaborYPrecio(sabor: String = "Jamón", maxPrecio: Double = 2.0) {
+    // 3. Filtro con 2 campos
+    fun filtrarDosCampos(algo: Any = "", otraCosa: Any = "") {
         viewModelScope.launch {
             _estadoUI.value = _estadoUI.value.copy(cargando = true)
-            val lista = repository.buscarPorSaborYPrecioMaximo(sabor, maxPrecio)
+            val lista = repository.buscarDosCampos(algo, otraCosa)
             _estadoUI.value = ConsultasUiState(
                 listaResultados = lista,
-                cargando = false,
-                ultimoFiltroAplicado = "Filtro 2 campos: sabor == '$sabor' AND precio <= $maxPrecio € (${lista.size})"
-            )
+                cargando = false)
         }
     }
 
-    // 4. Ordenar y Top 3: orderBy("precio", ASCENDING) + limit(3)
+    // 4. Ordenar y Top 3
     fun obtenerTop3Baratas() {
         viewModelScope.launch {
-            _estadoUI.value = _estadoUI.value.copy(cargando = true)
-            val lista = repository.obtenerTop3Baratas()
-            _estadoUI.value = ConsultasUiState(
-                listaResultados = lista,
-                cargando = false,
-                ultimoFiltroAplicado = "Ordenación + Límite: Top 3 más baratas"
-            )
+
         }
     }
 }
